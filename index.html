@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeno — AI Prompt Packs for Professionals</title>
+<meta name="description" content="Stop getting generic advice. Start getting a plan. Ready-to-use AI prompt packs for professionals. Works with Claude and ChatGPT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F1D2E;
+    --navy-mid: #1A2E45;
+    --navy-soft: #243B55;
+    --accent: #4A90D9;
+    --accent2: #7AB3E0;
+    --subtle: #9AAFC4;
+    --white: #FFFFFF;
+    --offwhite: #EAF2FB;
+    --text: #E8F1FA;
+    --text-muted: #8DAFC8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(15, 29, 46, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(74, 144, 217, 0.15);
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-logo-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    letter-spacing: 0.18em;
+    color: var(--white);
+  }
+
+  .nav-logo-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--subtle);
+    text-transform: uppercase;
+  }
+
+  .nav-logo-line {
+    width: 100%;
+    height: 1.5px;
+    background: var(--accent);
+    margin-top: 2px;
+  }
+
+  .nav-cta {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: var(--accent);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    overflow: hidden;
+  }
+
+  /* Geometric background circles */
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,144,217,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 780px; }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(74, 144, 217, 0.4);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--accent2);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(74, 144, 217, 0.25);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(74, 144, 217, 0.35);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
+
+  /* ── STAT BAR ── */
+  .stat-bar {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(26, 46, 69, 0.4);
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--accent2);
+    display: block;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  /* ── SECTION ── */
+  section { position: relative; z-index: 1; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  /* ── PRODUCTS ── */
+  .products {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .products-header { margin-bottom: 3rem; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(74, 144, 217, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 144, 217, 0.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .product-card.coming-soon {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .product-thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--navy-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-thumb-inner {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .product-thumb-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .product-thumb-sub {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--subtle);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .product-thumb-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 auto 14px;
+  }
+
+  .product-thumb-topic {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  .product-thumb-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .coming-pill {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(74, 144, 217, 0.15);
+    border: 1px solid rgba(74, 144, 217, 0.3);
+    border-radius: 100px;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--accent2);
+  }
+
+  .product-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+  .product-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .product-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent2);
+  }
+
+  .product-buy {
+    display: inline-block;
+    padding: 0.45rem 1.1rem;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .product-card:hover .product-buy { background: var(--accent2); }
+
+  .product-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .product-section-tag {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    background: rgba(74, 144, 217, 0.1);
+    border: 1px solid rgba(74, 144, 217, 0.2);
+    border-radius: 100px;
+    color: var(--accent2);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .step {
+    padding: 2rem 1.5rem;
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    text-align: left;
+  }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: rgba(74, 144, 217, 0.2);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── BEFORE/AFTER ── */
+  .ba {
+    padding: 6rem 2rem;
+    background: rgba(26, 46, 69, 0.3);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .ba-inner { max-width: 900px; margin: 0 auto; }
+  .ba-header { text-align: center; margin-bottom: 3rem; }
+
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 600px) { .ba-grid { grid-template-columns: 1fr; } }
+
+  .ba-card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .ba-label {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .ba-before .ba-label { background: rgba(231, 76, 60, 0.2); color: #F1948A; }
+  .ba-after  .ba-label { background: rgba(39, 174, 96, 0.2); color: #82E0AA; }
+
+  .ba-content {
+    padding: 1.25rem;
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-top: none;
+  }
+
+  .ba-prompt {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ba-response-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--subtle);
+    margin-bottom: 0.4rem;
+  }
+
+  .ba-response {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--subtle);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent2); }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(138, 175, 200, 0.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .products { padding: 4rem 1.25rem; }
+    .how { padding: 4rem 1.25rem; }
+    .ba { padding: 4rem 1.25rem; }
+    .stat-bar { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-name">ZENO</span>
+    <span class="nav-logo-sub">AI Prompt Packs</span>
+    <div class="nav-logo-line"></div>
+  </div>
+  <a href="https://zenoaipacks.gumroad.com" class="nav-cta" target="_blank">View the Store →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">✦ Works with Claude, ChatGPT, Gemini, Grok & more</span>
+    <h1 class="hero-title">Stop getting <em>generic</em> advice.<br>Start getting a plan.</h1>
+    <p class="hero-sub">Ready-to-use AI prompt packs for professionals. Fill in the brackets, paste, and get expert-level output in seconds.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">See the Packs</a>
+      <a href="https://zenoaipacks.gumroad.com" class="btn-secondary" target="_blank">View the Store</a>
+    </div>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat">
+    <span class="stat-num">40+</span>
+    <span class="stat-label">Prompts per pack</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">7</span>
+    <span class="stat-label">Sections per pack</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">4+</span>
+    <span class="stat-label">AI platforms supported</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Times you can reuse them</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header">
+    <p class="section-label">The Packs</p>
+    <h2 class="section-title">Built for professionals<br>who want real results</h2>
+    <p class="section-sub">Each pack is a curated library of structured prompts — engineered to get specific, actionable output instead of generic advice.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Personal Finance — LIVE -->
+    <a href="https://zenoaipacks.gumroad.com/l/sluacq" class="product-card" target="_blank">
+      <div class="product-thumb" style="background: linear-gradient(135deg, #0F1D2E 0%, #1A2E45 100%);">
+        <div class="product-thumb-accent-bar"></div>
+        <div class="product-thumb-inner">
+          <span class="product-thumb-name">ZENO</span>
+          <span class="product-thumb-sub">AI PROMPT PACKS</span>
+          <div class="product-thumb-line"></div>
+          <span class="product-thumb-topic">Personal Finance</span>
+        </div>
+      </div>
+      <div class="product-body">
+        <p class="product-title">40 AI Prompts for Personal Finance</p>
+        <div class="product-sections">
+          <span class="product-section-tag">Budgeting</span>
+          <span class="product-section-tag">Debt Payoff</span>
+          <span class="product-section-tag">Investing</span>
+          <span class="product-section-tag">Negotiation</span>
+          <span class="product-section-tag">Mindset</span>
+        </div>
+        <p class="product-desc">Stop guessing what to do with your money. 40 prompts that act like a personal finance coach — specific, actionable, and personalized to your numbers. Works with any AI platform.</p>
+        <div class="product-footer">
+          <span class="product-price">$27</span>
+          <span class="product-buy">Get this pack →</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Real Estate — Coming Soon -->
+    <div class="product-card coming-soon">
+      <div class="product-thumb" style="background: linear-gradient(135deg, #1A2E45 0%, #243B55 100%);">
+        <div class="product-thumb-accent-bar"></div>
+        <div class="product-thumb-inner">
+          <span class="product-thumb-name">ZENO</span>
+          <span class="product-thumb-sub">AI PROMPT PACKS</span>
+          <div class="product-thumb-line"></div>
+          <span class="product-thumb-topic">Real Estate</span>
+        </div>
+        <span class="coming-pill">Coming Soon</span>
+      </div>
+      <div class="product-body">
+        <p class="product-title">40 AI Prompts for Real Estate Agents</p>
+        <div class="product-sections">
+          <span class="product-section-tag">Listings</span>
+          <span class="product-section-tag">Client Comms</span>
+          <span class="product-section-tag">Negotiation</span>
+          <span class="product-section-tag">Lead Gen</span>
+        </div>
+        <p class="product-desc">Listing descriptions, offer scripts, client emails, CMA summaries, objection handlers and more — built for agents who want to work smarter.</p>
+        <div class="product-footer">
+          <span class="product-price">$34</span>
+          <span class="product-buy" style="background: var(--navy-soft); cursor:default;">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HR — Coming Soon -->
+    <div class="product-card coming-soon">
+      <div class="product-thumb" style="background: linear-gradient(135deg, #1A2E45 0%, #243B55 100%);">
+        <div class="product-thumb-accent-bar"></div>
+        <div class="product-thumb-inner">
+          <span class="product-thumb-name">ZENO</span>
+          <span class="product-thumb-sub">AI PROMPT PACKS</span>
+          <div class="product-thumb-line"></div>
+          <span class="product-thumb-topic">HR & Recruiting</span>
+        </div>
+        <span class="coming-pill">Coming Soon</span>
+      </div>
+      <div class="product-body">
+        <p class="product-title">40 AI Prompts for HR & Recruiters</p>
+        <div class="product-sections">
+          <span class="product-section-tag">Job Descriptions</span>
+          <span class="product-section-tag">Interviews</span>
+          <span class="product-section-tag">Onboarding</span>
+          <span class="product-section-tag">Reviews</span>
+        </div>
+        <p class="product-desc">Write better job descriptions, run sharper interviews, handle tough conversations, and build a stronger team — with AI doing the heavy lifting.</p>
+        <div class="product-footer">
+          <span class="product-price">$34</span>
+          <span class="product-buy" style="background: var(--navy-soft); cursor:default;">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Three steps to a better answer</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <p class="step-title">Pick your prompt</p>
+      <p class="step-desc">Use the cheat sheet to find the right prompt for your situation in seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <p class="step-title">Fill in the brackets</p>
+      <p class="step-desc">Replace every [placeholder] with your real numbers and situation. Specificity is everything.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <p class="step-title">Paste and get a plan</p>
+      <p class="step-desc">Drop it into Claude, ChatGPT, Gemini, Grok, or any AI platform and get a specific, actionable response — not generic tips.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="ba">
+  <div class="ba-inner">
+    <div class="ba-header">
+      <p class="section-label">The difference</p>
+      <h2 class="section-title">Same AI. Better prompt.</h2>
+      <p class="section-sub" style="margin: 0 auto;">Vague questions get generic answers. Zeno prompts are engineered to get you the second kind of response.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card ba-before">
+        <div class="ba-label">✕ &nbsp;Vague prompt</div>
+        <div class="ba-content">
+          <p class="ba-prompt">"Help me negotiate my phone bill"</p>
+          <p class="ba-response-label">AI RESPONSE</p>
+          <p class="ba-response">Here are some general tips for negotiating your phone bill: 1) Call your carrier and ask for promotions. 2) Mention competitor pricing. 3) Ask to speak to retention. 4) Be polite but firm...</p>
+        </div>
+      </div>
+      <div class="ba-card ba-after">
+        <div class="ba-label">✓ &nbsp;Zeno prompt</div>
+        <div class="ba-content">
+          <p class="ba-prompt">"I pay Verizon $89/mo. T-Mobile has it for $65. Write me a word-for-word script to call and get a lower rate — with a fallback if they say no."</p>
+          <p class="ba-response-label">AI RESPONSE</p>
+          <p class="ba-response">"Hi, I've been a Verizon customer for 4 years and I love the service, but I need to talk about my bill. I'm currently paying $89/month and I just saw T-Mobile is offering the same plan for $65. I'd really like to stay with Verizon — can you help me find a way to match that rate?..."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">ZENO</p>
+  <p class="footer-sub">AI Prompt Packs for Professionals</p>
+  <div class="footer-links">
+    <a href="https://zenoaipacks.gumroad.com" target="_blank">View the Store</a>
+    <a href="https://twitter.com/zenoaipacks" target="_blank">X / Twitter</a>
+    <a href="mailto:hello@zenoaipacks.com">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Zeno. All rights reserved.</p>
+</footer>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Fade in cards on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.product-card, .step, .ba-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
